@@ -1,58 +1,58 @@
 
 PRAGMA foreign_keys = ON;
 
+DROP TABLE IF EXISTS replies;
+DROP TABLE IF EXISTS question_follows;
+DROP TABLE IF EXISTS question_likes;
+DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-  user_id INTEGER PRIMARY KEY,
+  id INTEGER PRIMARY KEY,
   fname TEXT NOT NULL,
   lname TEXT NOT NULL
 );
 
 
-DROP TABLE IF EXISTS questions;
-
 CREATE TABLE questions (
-  question_id INTEGER PRIMARY KEY,
+  id INTEGER PRIMARY KEY,
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   author_id INTEGER NOT NULL,
 
-  FOREIGN KEY(author_id) REFERENCES users(user_id)
+  FOREIGN KEY (author_id) REFERENCES users(id)
 );
 
-DROP TABLE IF EXISTS question_follows;
 
 CREATE TABLE question_follows (
+  id INTEGER PRIMARY KEY,
   question_id INTEGER NOT NULL, -- can be null?
   user_id INTEGER NOT NULL,
 
-  FOREIGN KEY(user_id) REFERENCES users(user_id),
-  FOREIGN KEY(question_id) REFERENCES questions(question_id)
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (question_id) REFERENCES questions(id)
 );
-
-DROP TABLE IF EXISTS replies;
 
 CREATE TABLE replies (
-  reply_id INTEGER PRIMARY KEY,
-  question_id INTEGER ,
+  id INTEGER PRIMARY KEY,
+  question_id INTEGER NOT NULL,
   parent_id INTEGER,
-  author_id INTEGER,
+  reply_author_id INTEGER NOT NULL,
   body TEXT NOT NULL,
 
-  FOREIGN KEY(author_id) REFERENCES users(user_id),
-  FOREIGN KEY(question_id) REFERENCES questions(question_id)
+  FOREIGN KEY (reply_author_id) REFERENCES users(id),
+  FOREIGN KEY (question_id) REFERENCES questions(id)
 
 );
 
-DROP TABLE IF EXISTS question_likes;
 
 CREATE TABLE question_likes (
+  id INTEGER PRIMARY KEY,
   question_id INTEGER NOT NULL,
   user_id INTEGER NOT NULL,
   
-  FOREIGN KEY(user_id) REFERENCES users(user_id),
-  FOREIGN KEY(question_id) REFERENCES questions(question_id)
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (question_id) REFERENCES questions(id)
 
 );
 
@@ -67,29 +67,29 @@ VALUES
 INSERT INTO
   questions (title, body, author_id)
 VALUES
-  ('How do I open SQL file?', 'How do I open SQL file?', (SELECT user_id FROM users WHERE fname = 'Edward' AND lname = 'James')),
-  ('How to pass Ruby 2 assessment?', 'How to pass Ruby 2 assessment?', (SELECT user_id FROM users WHERE fname = 'Edward' AND lname = 'James')),
-  ('What is the weather today?', 'What is the weather today?', (SELECT user_id FROM users WHERE fname = 'David' AND lname = 'Green'));
+  ('How do I open SQL file?', 'How do I open SQL file?', (SELECT id FROM users WHERE fname = 'Edward' AND lname = 'James')),
+  ('How to pass Ruby 2 assessment?', 'How to pass Ruby 2 assessment?', (SELECT id FROM users WHERE fname = 'Edward' AND lname = 'James')),
+  ('What is the weather today?', 'What is the weather today?', (SELECT id FROM users WHERE fname = 'David' AND lname = 'Green'));
 
 INSERT INTO
   question_follows (question_id, user_id)
 VALUES
-  ((SELECT question_id FROM questions WHERE title = 'How do I open SQL file?'),(SELECT user_id FROM users WHERE fname = 'Edward' AND lname = 'James') ),
-  ((SELECT question_id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'), (SELECT user_id FROM users WHERE fname = 'Edward' AND lname = 'James') ),
-  ((SELECT question_id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'),(SELECT user_id FROM users WHERE fname = 'David' AND lname = 'Green') );
+  ((SELECT id FROM questions WHERE title = 'How do I open SQL file?'),(SELECT id FROM users WHERE fname = 'Edward' AND lname = 'James') ),
+  ((SELECT id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'), (SELECT id FROM users WHERE fname = 'Edward' AND lname = 'James') ),
+  ((SELECT id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'),(SELECT id FROM users WHERE fname = 'David' AND lname = 'Green') );
 
 INSERT INTO
   replies (question_id, parent_id, reply_author_id, body)
 VALUES
-  ((SELECT question_id FROM questions WHERE title = 'How do I open SQL file?'), null, 1, 'I still dont know how to open the SQL file'),
-  ((SELECT question_id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'),null, 1, 'Any tips?'),
-  ((SELECT question_id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'), 2, 2, 'What if I fail?');
+  ((SELECT id FROM questions WHERE title = 'How do I open SQL file?'), null, 1, 'I still dont know how to open the SQL file'),
+  ((SELECT id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'),null, 1, 'Any tips?'),
+  ((SELECT id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'), 2, 2, 'What if I fail?');
 
 
 INSERT INTO
   question_likes (question_id, user_id)
 VALUES
-  ((SELECT question_id FROM questions WHERE title = 'How do I open SQL file?'), (SELECT user_id FROM users WHERE fname = 'Edward' AND lname = 'James') )
+  ((SELECT id FROM questions WHERE title = 'How do I open SQL file?'), (SELECT id FROM users WHERE fname = 'Edward' AND lname = 'James') )
 
 
 
