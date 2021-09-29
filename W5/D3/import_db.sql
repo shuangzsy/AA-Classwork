@@ -24,12 +24,10 @@ CREATE TABLE questions (
 DROP TABLE IF EXISTS question_follows;
 
 CREATE TABLE question_follows (
-  title TEXT NOT NULL,
-  body TEXT NOT NULL,
   question_id INTEGER NOT NULL, -- can be null?
-  author_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
 
-  FOREIGN KEY(author_id) REFERENCES users(user_id),
+  FOREIGN KEY(user_id) REFERENCES users(user_id),
   FOREIGN KEY(question_id) REFERENCES questions(question_id)
 );
 
@@ -50,11 +48,10 @@ CREATE TABLE replies (
 DROP TABLE IF EXISTS question_likes;
 
 CREATE TABLE question_likes (
-  total_likes INTEGER DEFAULT 0,
-  author_id INTEGER NOT NULL,
-  question_id INTEGER NOt NULL,
-
-  FOREIGN KEY(author_id) REFERENCES users(user_id),
+  question_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
+  
+  FOREIGN KEY(user_id) REFERENCES users(user_id),
   FOREIGN KEY(question_id) REFERENCES questions(question_id)
 
 );
@@ -64,7 +61,8 @@ INSERT INTO
   users (fname, lname)
 VALUES
   ('Edward', 'James'),
-  ('David', 'Green');
+  ('David', 'Green'),
+  ('Sam', 'Song');
 
 INSERT INTO
   questions (title, body, author_id)
@@ -74,11 +72,26 @@ VALUES
   ('What is the weather today?', 'What is the weather today?', (SELECT user_id FROM users WHERE fname = 'David' AND lname = 'Green'));
 
 INSERT INTO
-  questions (title, body, author_id)
+  question_follows (question_id, user_id)
 VALUES
-  ('How do I open SQL file?', 'How do I open SQL file?', 1),
-  ('How to pass Ruby 2 assessment?', 'How to pass Ruby 2 assessment?', 1),
-  ('What is the weather today?', 'What is the weather today?', 2);
+  ((SELECT question_id FROM questions WHERE title = 'How do I open SQL file?'),(SELECT user_id FROM users WHERE fname = 'Edward' AND lname = 'James') ),
+  ((SELECT question_id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'), (SELECT user_id FROM users WHERE fname = 'Edward' AND lname = 'James') ),
+  ((SELECT question_id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'),(SELECT user_id FROM users WHERE fname = 'David' AND lname = 'Green') );
+
+INSERT INTO
+  replies (question_id, parent_id, reply_author_id, body)
+VALUES
+  ((SELECT question_id FROM questions WHERE title = 'How do I open SQL file?'), null, 1, 'I still dont know how to open the SQL file'),
+  ((SELECT question_id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'),null, 1, 'Any tips?'),
+  ((SELECT question_id FROM questions WHERE title = 'How to pass Ruby 2 assessment?'), 2, 2, 'What if I fail?');
+
+
+INSERT INTO
+  question_likes (question_id, user_id)
+VALUES
+  ((SELECT question_id FROM questions WHERE title = 'How do I open SQL file?'), (SELECT user_id FROM users WHERE fname = 'Edward' AND lname = 'James') )
+
+
 
 
 
