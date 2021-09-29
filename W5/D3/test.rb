@@ -1,7 +1,7 @@
 require 'sqlite3'
 require 'singleton'
 
-class QuestionsDatabase < sqlite3::Database
+class QuestionsDatabase < SQLite3::Database
     include Singleton
 
     def initialize
@@ -13,8 +13,10 @@ end
 
 class Users
 
+    attr_accessor :fname, :lname
+
     def self.all
-        data = QuestionsDatabase.instance.execute("SELECT * FROM users")
+       data = QuestionsDatabase.instance.execut e("SELECT * FROM users")
         data.map { |datum| Users.new(datum) }
     end
 
@@ -44,6 +46,12 @@ class Users
         SQL
         return nil unless user.length > 0
         user.map{|ele| Users.new(ele)}
+    end
+
+     def initialize(options)
+        @id = options['id']
+        @fname = options['fname']
+        @lname = options['lname']
     end
 
 end
