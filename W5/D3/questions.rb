@@ -2,7 +2,7 @@ require 'sqlite3'
 require_relative 'question_db'
 
 class Questions
-  #attr_reader :author_id
+  attr_reader :author_id
 
     def self.all
        data = QuestionsDatabase.instance.execute("SELECT * FROM questions")
