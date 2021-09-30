@@ -20,7 +20,7 @@ class Reply
                 id = ?
         SQL
         return nil unless reply_id.length > 0
-        reply_id.map{|ele| Reply.new(ele)}
+        Reply.new(reply_id.first)
     end
 
     def self.find_by_user_id(id)
@@ -54,21 +54,26 @@ class Reply
     def initialize(options)
         @id = options['id']
         @question_id = options['question_id']
+        @parent_id = options['parent_id']
         @reply_author_id = options['reply_author_id']
         @body = options['body']
     end
 
     def child_replies
-        child_replies_record = QuestionsDatabase.instance.execute(<<-SQL)
+        child_replies_record = QuestionsDatabase.instance.execute(<<-SQL, @id)
             SELECT
                 *
             FROM
                 replies
             WHERE
-                parent_id = self.id
+                parent_id = ?
         SQL
         return nil unless child_replies_record.length > 0
         child_replies_record.map{|ele| Reply.new(ele)}
+    end
+
+    def parent_replies
+        Reply.find_by_id(parent_id)
     end
 
 
