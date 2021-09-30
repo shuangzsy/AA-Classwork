@@ -1,6 +1,8 @@
 
 require 'sqlite3'
 require_relative 'question_db'
+require_relative 'users'
+require_relative 'questions'
 
 class Reply
   attr_reader :author_id, :parent_id, :id
@@ -76,7 +78,14 @@ class Reply
         Reply.find_by_id(parent_id)
     end
 
+    def reply_author
+        f_name = Users.find_by_id(@reply_author_id).fname
+        l_name = Users.find_by_id(@reply_author_id).lname
+        return f_name + ' ' + l_name
+    end
 
-
+    def reply_question
+        return Questions.find_by_id(@question_id).body
+    end
 
 end

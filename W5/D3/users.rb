@@ -20,7 +20,7 @@ class Users
                 id = ?
         SQL
         return nil unless user_id.length > 0
-        user_id.map{|ele| Users.new(ele)}
+        Users.new(user_id.first)
 
     end
 

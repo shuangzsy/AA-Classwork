@@ -2,7 +2,7 @@ require 'sqlite3'
 require_relative 'question_db'
 
 class Questions
-  attr_reader :author_id
+  attr_reader :author_id, :body
 
     def self.all
        data = QuestionsDatabase.instance.execute("SELECT * FROM questions")
@@ -19,7 +19,7 @@ class Questions
                 id = ?
         SQL
         return nil unless question_id.length > 0
-        question_id.map{|ele| Questions.new(ele)}
+        Questions.new(question_id.first)
     end
 
     def self.find_by_author_id(author_id)
@@ -42,6 +42,6 @@ class Questions
         @author_id = options['author_id']
     end
 
-    
+
 
 end
