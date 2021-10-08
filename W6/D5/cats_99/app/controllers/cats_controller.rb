@@ -1,0 +1,3 @@
+class CatsController < ApplicationController
+  
+end
