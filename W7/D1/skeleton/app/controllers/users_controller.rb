@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  def index
+    @users = User.all
+    render :index
+  end
+  
   def new
     @user = User.new
     render :new
@@ -12,6 +17,17 @@ class UsersController < ApplicationController
       render json: user.errors.full_messages, status: 422 #unprocessable entity
     end
   end
+
+  def edit
+    @user = User.find(params[:id])
+    render :edit
+  end
+
+  def show
+    @user = User.find(params[:id])
+    render :show
+  end
+
 
   private
   def user_params

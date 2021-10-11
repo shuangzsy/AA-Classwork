@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   def is_valid_password?(password)
     password_object = BCrypt::Password.new(self.password_digest)
-    password_object.is_password?(password) #?
+    password_object.is_password?(password) 
   end
 
   def self.find_by_credentials(username,password)
