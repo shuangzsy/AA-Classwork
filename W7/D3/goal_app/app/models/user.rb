@@ -29,6 +29,8 @@ class User < ApplicationRecord
     self.session_token ||= SecureRandom::urlsafe_base64
   end
 
-
+  def is_valid_password?(password)
+    BCrypt::Password.new(self.password_digest).is_password?(password)
+  end
 
 end

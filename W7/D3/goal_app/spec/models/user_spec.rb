@@ -29,4 +29,24 @@ RSpec.describe User, type: :model do
     it {should validate_uniqueness_of(:username)}
     it {should validate_uniqueness_of(:session_token)}
   end
+
+  # describe "User#password=(password)" do
+  #   it "set an instance variable @password"
+  describe "User#is_valid_password?" do
+    let!(:user) {create(:user)} 
+
+    context "valid password" do
+      it "returns true"  do
+        expect(user.is_valid_password?('password')).to be true
+      end
+    end
+
+    context "invalid password" do 
+      it "returns false" do
+        expect(user.is_valid_password?('123456')).to be false
+      end
+    end
+  end
+
+
 end
