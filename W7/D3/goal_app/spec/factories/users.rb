@@ -13,7 +13,7 @@
 FactoryBot.define do
   factory :user do
     username { Faker::Movies::HarryPotter.character } # assigns user to the result of the block
-    goal { "Get a new westie" } # different syntax, same result
+    goal { "I want a " + Faker::Creature::Dog.breed } # different syntax, same result
     password { "password" }
   end
 end

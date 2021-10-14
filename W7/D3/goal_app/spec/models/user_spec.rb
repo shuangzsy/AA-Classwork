@@ -48,5 +48,21 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "Password Encrytion" do
+    it "does not save the password to the database" do
+      FactoryBot.create(:user, username: "Aji")
+      user = User.find_by(username: "Aji")
+      expect(user.password).not_to eq("password")
+    end
+
+    it "encrypts password using BCrypt" do
+      expect(BCrypt::Password).to receive(:create).with("ajiaji")
+      FactoryBot.build(:user, password: "ajiaji")
+    end
+  end
+
+
+
+
 
 end
