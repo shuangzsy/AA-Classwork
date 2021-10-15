@@ -4104,3 +4104,11 @@ Processing by SessionsController#destroy as HTML
   ↳ app/models/user.rb:16
   [1m[35m (18.6ms)[0m  [1m[35mCOMMIT[0m
   ↳ app/models/user.rb:16
+Completed 500 Internal Server Error in 17805906ms (ActiveRecord: 149.4ms)
+
+
+  
+Errno::EIO (Input/output error - read):
+  
+app/controllers/application_controller.rb:21:in `logout'
+app/controllers/sessions_controller.rb:24:in `destroy'

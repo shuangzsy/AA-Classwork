@@ -1,0 +1,66 @@
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+#sections-sidebar-btn, #search-modal-btn{
+  display: block;
+  padding: 10px 20px;
+}
+
+button {
+margin: 3px;
+}
+
+#gear {
+ font-size: 2em;
+}
+
+i + span {
+  padding: 10px 5px; 
+}
+.left-nav > ul,
+.right-nav > ul {
+  display: flex;
+  align-items: flex-end;
+  border-left: 20px;
+  border-right: 20px;
+  padding: 10px;
+}
+
+.left-nav {
+
+  > ul {
+    > li {
+       
+    }
+  }
+
+  span {
+
+  }
+}
+
+.right-nav  {
+
+  > ul {
+
+    > li {
+  
+    }
+
+    > li:last-of-type {
+      
+    }
+  }
+  
+  i {
+
+  }
+}
+
+.left-nav > ul > li:hover,
+.right-nav > ul > li:last-of-type:hover {
+background: $light-gray;
+}
