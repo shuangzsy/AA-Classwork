@@ -88,6 +88,13 @@ Board.prototype.isMine = function (pos, color) {
  * Checks if a given position has a piece on it.
  */
 Board.prototype.isOccupied = function (pos) {
+  let x, y;
+  [x, y] = pos;
+  if (this.grid[x][y] !== undefined){
+    return true
+  }else{
+    return false
+  }
 };
 
 /**
@@ -104,6 +111,31 @@ Board.prototype.isOccupied = function (pos) {
  * Returns empty array if no pieces of the opposite color are found.
  */
 Board.prototype._positionsToFlip = function(pos, color, dir, piecesToFlip){
+  if (!piecesToFlip){
+    piecesToFlip = []
+  }
+  let x, y;
+  [x, y] = pos;
+  let dir_x, dir_y;
+  [dir_x, dir_y] = dir;
+  x += dir_x;
+  y += dir_y;
+
+  if (!this.isValidPos([x, y])){
+    return [];
+  }
+  if (!this.isOccupied([x, y])) {
+    return [];
+  }
+  if (this.isMine([x, y],color)){
+    if (piecesToFlip.length === 0){
+      return [];
+    }else{
+      return piecesToFlip;
+    }
+  }else{
+  piecesToFlip.push([x,y])
+  return this._positionsToFlip([x, y], color, dir, piecesToFlip)}
 };
 
 /**
