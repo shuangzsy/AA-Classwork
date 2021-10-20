@@ -144,7 +144,29 @@ Board.prototype._positionsToFlip = function(pos, color, dir, piecesToFlip){
  * color being flipped.
  */
 Board.prototype.validMove = function (pos, color) {
+  let flag = false;
+  if (this.isOccupied(pos)) {
+    return false;
+  } else {
+    // Board.DIRS.forEach(dir => {
+    //   console.log(this._positionsToFlip(pos, color, dir).length)
+    //   if (this._positionsToFlip(pos, color, dir).length > 0) {
+    //     flag = true;
+    //   }
+    // })
+
+    for (let i = 0; i < Board.DIRS.length; i++) {
+      if (this._positionsToFlip(pos, color, Board.DIRS[i]).length > 0) {
+        return true;
+      }
+    }
+
+    // return flag;
+    return false;
+  }
 };
+
+
 
 /**
  * Adds a new piece of the given color to the given position, flipping the
@@ -192,3 +214,8 @@ if (typeof window === 'undefined'){
   module.exports = Board;
 }
 // DON'T TOUCH THIS CODE
+
+
+let x = new Board()
+console.log(x)
+console.log(x.validMove([2,3], 'black'))
