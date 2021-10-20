@@ -33,14 +33,37 @@ Board.DIRS = [
 /**
  * Checks if a given position is on the Board.
  */
+// instance method
 Board.prototype.isValidPos = function (pos) {
+  let x = pos[0];
+  let y = pos[1];
+
+  if ((x >= 0 && x <= 7) && (y >= 0 && y <= 7)) {
+    return true;
+  } else {
+    return false;
+  }
 };
+
+// Class method
+// Board.someClassMethod = function() {
+
+// }
 
 /**
  * Returns the piece at a given [x, y] position,
  * throwing an Error if the position is invalid.
  */
 Board.prototype.getPiece = function (pos) {
+  if (this.isValidPos(pos)) {
+    if (this.grid[pos[0]][pos[1]]) {
+      return this.grid[pos[0]][pos[1]];
+    } else {
+      return undefined;
+    }
+  } else {
+    throw new Error('Not valid pos!');
+  }
 };
 
 /**
@@ -48,6 +71,17 @@ Board.prototype.getPiece = function (pos) {
  * matches a given color.
  */
 Board.prototype.isMine = function (pos, color) {
+  let x, y;
+  [x, y] = pos;
+  if (this.grid[x][y]) {
+    if (this.grid[x][y].color === color ) {
+      return true;
+    } else if (this.grid[x][y].color !== color) {
+      return false;
+    }
+  } else {
+    return undefined;
+  }
 };
 
 /**
