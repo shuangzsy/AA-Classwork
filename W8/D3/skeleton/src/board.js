@@ -90,7 +90,7 @@ Board.prototype.isMine = function (pos, color) {
 Board.prototype.isOccupied = function (pos) {
   let x, y;
   [x, y] = pos;
-  if (this.grid[x][y] !== undefined){
+  if (this.grid[x][y]){
     return true
   }else{
     return false
@@ -199,12 +199,26 @@ Board.prototype.placePiece = function (pos, color) {
  * the Board for a given color.
  */
 Board.prototype.validMoves = function (color) {
+  // check all positions on board
+  // if valid move pos push into arr w/ given color
+  let validPostions = [];
+
+  for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+      if (this.validMove([i, j], color)) validPostions.push([i, j]);
+    }
+  }
+  return validPostions;
 };
 
 /**
  * Checks if there are any valid moves for the given color.
  */
 Board.prototype.hasMove = function (color) {
+  if (this.validMoves(color).length === 0) {
+    return false;
+  }
+  return true;
 };
 
 
@@ -214,6 +228,11 @@ Board.prototype.hasMove = function (color) {
  * the black player are out of moves.
  */
 Board.prototype.isOver = function () {
+  if (this.hasMove('white') || this.hasMove('black')) {
+    return false;
+  } else {
+    return true;
+  }
 };
 
 
@@ -223,6 +242,18 @@ Board.prototype.isOver = function () {
  * Prints a string representation of the Board to the console.
  */
 Board.prototype.print = function () {
+  console.log('  0,1,2,3,4,5,6,7')
+  for (let i = 0; i < 8; i++) {
+    let str = "";
+    for (let j = 0; j < 8; j++) {
+      if (this.grid[i][j] === undefined) {
+        str += "_ ";
+      } else {
+        str += this.grid[i][j].toString() + " ";
+      }
+    }
+    console.log(`${i} ${str}`);
+  }
 };
 
 
@@ -233,6 +264,5 @@ if (typeof window === 'undefined'){
 // DON'T TOUCH THIS CODE
 
 
-let x = new Board()
-console.log(x)
-console.log(x.validMove([2,3], 'black'))
+// let x = new Board()
+// x.print();
