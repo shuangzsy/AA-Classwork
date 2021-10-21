@@ -4,18 +4,40 @@ const reader = readline.createInterface({
   output: process.stdout
 }); 
 
-// reader.question("Enter a number:", function addNumbers(sum = 0, numsLeft, completionCallback){
-//   if (numsLeft > 0){
-//     //prompt user for the inputs
-//     let userInput = ${num};
-//     addNumbers(sum, numsLeft, completionCallback)
-//   }
-// })
+// function completionCallback(sum) {
+//   console.log(`Total sum: ${sum}`
+// )};
+function completionCallback(sum){
+  console.log(`${sum}`);
+}
 
-reader.question("Enter a number:", function (num) {
-  console.log(`this is the ${num}`);
-  reader.close();
-});
+
+function addNumbers(sum = 0, numsLeft = 5, completionCallback){
+    if (numsLeft > 0){
+      console.log("inside if")
+      reader.question("Enter a number:", function(num){
+        userInput = parseInt(num); 
+        sum += userInput; 
+        numsLeft -= 1; 
+        addNumbers(sum, numsLeft, completionCallback);
+      }); 
+
+      
+
+    } else if (numsLeft === 0){
+      reader.close();
+      console.log("inside else")
+      return completionCallback(sum); 
+    }
+}
+
+addNumbers(20, 5, completionCallback);
+
+
+// reader.question("Enter a number:", function (num) {
+//   console.log(`this is the ${num}`);
+//   reader.close();
+// });
 
 
 // const readline = require('readline');
