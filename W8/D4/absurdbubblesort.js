@@ -26,23 +26,25 @@ function askIfGreaterThan(el1, el2, callback) {
 function innerBubbleSortLoop(arr, i, madeAnySwaps = false, outerBubbleSortLoop) {
   
   // Do an "async loop":
-  while (i < arr.length - 1){
-    //call askIfGreaterThan 
-    if (askIfGreaterThan(arr[i], arr[i+1], callback)){
-      //swap values
-      [arr[i], arr[i+1]] = [arr[i+1], arr[i]]; 
-      madeAnySwaps = true; 
-      i++; 
+  function loopStep() {
+    // (i < arr.length - 1)
+    if (i === arr.length -1){
+      outerBubbleSortLoop(madeAnySwaps);
     }
-    // if we
-    //[1,3,6]
-  } 
+    //call askIfGreaterThan 
+      madeAnySwaps = askIfGreaterThan(arr[i], arr[i+1], loopstep)
+      if(madeAnySwaps){[arr[i], arr[i + 1]] = [arr[i + 1], arr[i]] 
+        return true;}
+      else{
+        return false;};
+      //swap values
+      i++; 
+  }; 
+  loopStep();
 
   // need a something to track to see if on our last iteration we swapped anything
   // 1. If (i == arr.length - 1), call outerBubbleSortLoop, letting it
-  //    know whether any swap was made.
-  if (i == arr.length - 1){
-    outerBubbleSortLoop(madeAnySwaps); 
+  //    know whether any swap was made. 
   }
 
   
