@@ -15,6 +15,7 @@ function askIfGreaterThan(el1, el2, callback) {
     }else{
       callback(false);
     }
+    //is this handled in line 51? 
     // reader.close();
   });
 }
@@ -22,13 +23,39 @@ function askIfGreaterThan(el1, el2, callback) {
 // askIfGreaterThan(5, 10, a => console.log(a));
 
 // Once you're done testing askIfGreaterThan with dummy arguments, write this.
-function innerBubbleSortLoop(arr, i, madeAnySwaps, outerBubbleSortLoop) {
+function innerBubbleSortLoop(arr, i, madeAnySwaps = false, outerBubbleSortLoop) {
+  
   // Do an "async loop":
+  while (i < arr.length - 1){
+    //call askIfGreaterThan 
+    if (askIfGreaterThan(arr[i], arr[i+1], callback)){
+      //swap values
+      [arr[i], arr[i+1]] = [arr[i+1], arr[i]]; 
+      madeAnySwaps = true; 
+      i++; 
+    }
+    // if we
+    //[1,3,6]
+  } 
 
+  // need a something to track to see if on our last iteration we swapped anything
   // 1. If (i == arr.length - 1), call outerBubbleSortLoop, letting it
   //    know whether any swap was made.
+  if (i == arr.length - 1){
+    outerBubbleSortLoop(madeAnySwaps); 
+  }
+
+  
+  //users decide which element is larger. 
+  //if yes, we are not done
+  //if no, we are done
+  
+
+  //user prompt 
   // 2. Else, use `askIfGreaterThan` to compare `arr[i]` and `arr[i +
-  //    1]`. Swap if necessary. Call `innerBubbleSortLoop` again to
+  //    1]`. Swap if necessary. 
+  
+  //    Call `innerBubbleSortLoop` again to
   //    continue the inner loop. You'll want to increment i for the
   //    next call, and possibly switch madeAnySwaps if you did swap.
 }
@@ -40,10 +67,18 @@ function absurdBubbleSort(arr, sortCompletionCallback) {
   function outerBubbleSortLoop(madeAnySwaps) {
     // Begin an inner loop if you made any swaps. Otherwise, call
     // `sortCompletionCallback`.
+    if (madeAnySwaps === true){
+      innerBubbleSortLoop(arr, 0, false, outerBubbleSortLoop);
+    }else {
+      sortCompletionCallback();
+    }
   }
 
   // Kick the first outer loop off, starting `madeAnySwaps` as true.
+  outerBubbleSortLoop(true); 
 }
+
+//sortCompletionCallback, just print the array 
 
 absurdBubbleSort([3, 2, 1], function (arr) {
   console.log("Sorted array: " + JSON.stringify(arr));
