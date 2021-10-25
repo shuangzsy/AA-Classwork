@@ -15,7 +15,7 @@
   \*************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const MovingObject = __webpack_require__(/*! ./moving_object.js */ \"./src/moving_object.js\");\nconst Util = __webpack_require__(/*! ./util.js */ \"./src/util.js\");\n\nfunction Asteroid(pos) {\n  this.pos = pos,\n  this.color = \"#FF0000\",\n  this.radius = 10,\n  this.vel = [10,10]\n  // console.log(this.vel);\n\n  const options = {\n    pos: this.pos,\n    color: this.color,\n    radius: this.radius,\n    vel: this.vel\n  }\n\n  MovingObject.call(this, options)\n}\n\n\nUtil.inherits(Asteroid, MovingObject);\n\nmodule.exports = Asteroid;\n\n//# sourceURL=webpack://D1/./src/asteroid.js?");
+eval("const MovingObject = __webpack_require__(/*! ./moving_object.js */ \"./src/moving_object.js\");\nconst Util = __webpack_require__(/*! ./util.js */ \"./src/util.js\");\n\nfunction Asteroid(pos) {\n  const options = {\n    pos: pos,\n    color: \"#FF0000\",\n    radius: 10,\n    vel: Util.randomVec(20),\n  };\n\n  MovingObject.call(this, options); //grab the properties\n}\n\nUtil.inherits(Asteroid, MovingObject);// grab the functions\n\nmodule.exports = Asteroid;\n\n//# sourceURL=webpack://D1/./src/asteroid.js?");
 
 /***/ }),
 
@@ -45,7 +45,7 @@ eval("const Util = __webpack_require__(/*! ./util.js */ \"./src/util.js\"); // m
   \*********************/
 /***/ ((module) => {
 
-eval("const Util = {\n  inherits(childClass, parentClass){\n    function Surrogate(){};\n    Surrogate.prototype = parentClass.prototype;\n    childClass.prototype = new Surrogate;\n    childClass.prototype.contructor = childClass;\n  }\n};\n\nmodule.exports = Util;\n\n//# sourceURL=webpack://D1/./src/util.js?");
+eval("const Util = {\n  inherits(childClass, parentClass){\n    function Surrogate(){};\n    Surrogate.prototype = parentClass.prototype;\n    childClass.prototype = new Surrogate;\n    childClass.prototype.contructor = childClass;\n  },\n\n  randomVec(length) {\n    const deg = 2 * Math.PI * Math.random();\n    return Util.scale([Math.sin(deg), Math.cos(deg)], length);\n  },\n  // Scale the length of a vector by the given amount.\n  scale(vec, m) {\n    return [vec[0] * m, vec[1] * m];\n  }\n};\n\nmodule.exports = Util;\n\n//# sourceURL=webpack://D1/./src/util.js?");
 
 /***/ })
 
