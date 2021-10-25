@@ -1,10 +1,10 @@
-const util = require("./util.js"); // move?
+const Util = require("./util.js"); // move?
 
 function MovingObject(options){
   this.pos = options.pos; // [x, y]
-  this.vel = options.vel;
-  this.radius = options.radius;
-  this.color = options.color;
+  this.vel = options.vel,
+  this.radius = options.radius,
+  this.color = options.color
 }
 
 MovingObject.prototype.draw = function(ctx){

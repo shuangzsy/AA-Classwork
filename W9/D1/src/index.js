@@ -1,6 +1,8 @@
 console.log("Webpack is working!")
 
 const MovingObject = require("./moving_object.js");
+const Asteroid = require("./asteroid.js");
+const Util = require("./util.js");
 
 // set code to do something at a specific time
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -15,7 +17,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
     radius: 5,
     color: "#00FF00"
   });
+
+  let newAsteroid = new Asteroid([50,50]);
+  window.newAsteroid = newAsteroid;
   newObj.draw(ctx);
+  newAsteroid.draw(ctx);
   
   // window is an obj; create new key[val] pair to run in the browser console
   // window.newObj = newObj;
