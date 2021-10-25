@@ -1,3 +1,5 @@
+const util = require("./util.js"); // move?
+
 function MovingObject(options){
   this.pos = options.pos; // [x, y]
   this.vel = options.vel;
