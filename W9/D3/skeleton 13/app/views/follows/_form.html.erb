@@ -1,4 +1,4 @@
-<button class="follow-toggle" 
+<button class="follow-toggle"
         data-initial-follow-state="<%= current_user.follows?(User.find_by(username: params[:query])) %>" 
         data-user-id="<%= User.find_by(username: params[:query]).id %>"></button> 
 
