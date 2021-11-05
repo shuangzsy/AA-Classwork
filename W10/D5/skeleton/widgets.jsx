@@ -11,6 +11,6 @@ function Root() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const main = document.getElementById("main");
+  const main = document.getElementById("root");
   ReactDOM.render(<Root />, main);
 });
