@@ -1,11 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-// import configureStore from './store/store';
-
-
+import configureStore from "./store/store";
+import { receiveTodo, receiveTodos } from "./actions/todo_actions";
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("hello")
-  // const test = <h1>hello </h1>;
-  
+  const store = configureStore();
+  console.log("hello");
+  window.store = store;
+  window.receiveTodo = receiveTodo;
+  window.receiveTodos = receiveTodos;
 })
